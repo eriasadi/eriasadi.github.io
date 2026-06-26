@@ -3,45 +3,106 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>سایت من</title>
+  <title>سایت رسمی اریا اسدی</title>
   <style>
+    :root{
+      --bg:#0f172a;
+      --card:#111827;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --primary:#22c55e;
+      --primary-hover:#16a34a;
+    }
+    *{box-sizing:border-box}
     body{
       margin:0;
       font-family:tahoma, sans-serif;
-      background:#f5f7fb;
-      color:#222;
+      background:linear-gradient(135deg,#0b1020,#111827);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
     }
-    .wrap{
-      max-width:900px;
-      margin:60px auto;
-      background:#fff;
-      border-radius:16px;
-      box-shadow:0 10px 30px rgba(0,0,0,.08);
-      padding:30px;
+    .card{
+      width:min(900px,100%);
+      background:rgba(17,24,39,.9);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:20px;
+      box-shadow:0 20px 50px rgba(0,0,0,.4);
+      padding:32px;
     }
-    h1{margin-top:0;color:#1d4ed8}
-    .btn{
+    h1{
+      margin:0 0 8px;
+      font-size:34px;
+      line-height:1.4;
+    }
+    p{
+      margin:0 0 16px;
+      color:var(--muted);
+      line-height:2;
+      font-size:16px;
+    }
+    .badge{
       display:inline-block;
-      margin-top:15px;
-      background:#1d4ed8;
-      color:#fff;
+      margin-bottom:14px;
+      font-size:13px;
+      color:#bbf7d0;
+      background:rgba(34,197,94,.15);
+      border:1px solid rgba(34,197,94,.35);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+    .actions{
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn{
       text-decoration:none;
+      color:white;
+      background:var(--primary);
       padding:10px 16px;
       border-radius:10px;
+      font-size:14px;
+      transition:.2s;
+    }
+    .btn:hover{background:var(--primary-hover)}
+    .btn-outline{
+      background:transparent;
+      border:1px solid rgba(255,255,255,.2);
+    }
+    .btn-outline:hover{
+      background:rgba(255,255,255,.08);
     }
     .footer{
-      margin-top:30px;
-      font-size:14px;
-      color:#666;
+      margin-top:24px;
+      font-size:13px;
+      color:#94a3b8;
+      border-top:1px dashed rgba(255,255,255,.15);
+      padding-top:14px;
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>سلام 👋</h1>
-    <p>به سایت من خوش آمدید. این سایت به‌زودی تکمیل می‌شود.</p>
-    <a class="btn" href="#">تماس با من</a>
-    <div class="footer">ساخته شده با GitHub Pages</div>
-  </div>
+  <main class="card">
+    <span class="badge">✅ سایت فعال است</span>
+    <h1>سلام، من اریا اسدی هستم</h1>
+    <p>
+      به سایت شخصی من خوش آمدید. این صفحه نسخه اولیه است و به زودی
+      بخش‌های کامل‌تر مثل نمونه‌کارها، خدمات و راه‌های ارتباطی اضافه می‌شود.
+    </p>
+
+    <div class="actions">
+      <a class="btn" href="https://github.com/eriasadi" target="_blank">گیت‌هاب من</a>
+      <a class="btn btn-outline" href="#" onclick="alert('راه ارتباطی هنوز ثبت نشده 🙂')">تماس با من</a>
+    </div>
+
+    <div class="footer">
+      ساخته‌شده با GitHub Pages • رایگان و بدون هاست پولی
+    </div>
+  </main>
 </body>
 </html>

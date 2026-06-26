@@ -3,106 +3,241 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>سایت رسمی اریا اسدی</title>
+  <title>قصد شما چیست</title>
   <style>
     :root{
-      --bg:#0f172a;
-      --card:#111827;
-      --text:#e5e7eb;
-      --muted:#9ca3af;
-      --primary:#22c55e;
-      --primary-hover:#16a34a;
+      --bg1:#ffdbe4;      /* صورتی گلبهی روشن */
+      --bg2:#ffc1cf;      /* صورتی گلبهی */
+      --card:#fff7fa;
+      --text:#5d2c39;
+      --accent:#ff6f91;
+      --accent-dark:#e75480;
+      --soft:#ffe7ee;
+      --shadow:0 14px 35px rgba(199, 74, 117, 0.22);
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:tahoma, sans-serif;
-      background:linear-gradient(135deg,#0b1020,#111827);
-      color:var(--text);
+      font-family:"Tahoma", sans-serif;
       min-height:100vh;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:var(--text);
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:20px;
+      padding:24px;
     }
-    .card{
-      width:min(900px,100%);
-      background:rgba(17,24,39,.9);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:20px;
-      box-shadow:0 20px 50px rgba(0,0,0,.4);
-      padding:32px;
+
+    .app{
+      width:min(1100px,100%);
+      min-height:620px;
+      background:rgba(255,255,255,0.45);
+      border:1px solid rgba(255,255,255,0.6);
+      border-radius:30px;
+      backdrop-filter: blur(4px);
+      box-shadow: var(--shadow);
+      padding:28px 24px;
+      position:relative;
+      overflow:hidden;
     }
+
     h1{
-      margin:0 0 8px;
-      font-size:34px;
-      line-height:1.4;
+      text-align:center;
+      margin:5px 0 28px;
+      font-size:clamp(28px,4vw,44px);
+      color:#7a3047;
+      letter-spacing:0.4px;
     }
-    p{
-      margin:0 0 16px;
-      color:var(--muted);
-      line-height:2;
-      font-size:16px;
-    }
-    .badge{
-      display:inline-block;
-      margin-bottom:14px;
-      font-size:13px;
-      color:#bbf7d0;
-      background:rgba(34,197,94,.15);
-      border:1px solid rgba(34,197,94,.35);
-      padding:6px 10px;
-      border-radius:999px;
-    }
-    .actions{
-      margin-top:14px;
+
+    .stage{
+      position:relative;
+      min-height:500px;
       display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
     }
-    .btn{
-      text-decoration:none;
+
+    /* حالت اولیه سه درگاه کنار هم */
+    .gates{
+      width:min(980px,100%);
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:22px;
+      transition:all .6s ease;
+    }
+
+    .gate{
+      border:none;
+      border-radius:24px;
+      min-height:230px;
+      background:var(--card);
+      color:var(--text);
+      font-size:clamp(22px,2.3vw,31px);
+      font-weight:700;
+      cursor:pointer;
+      box-shadow: var(--shadow);
+      border:2px solid rgba(255,255,255,0.7);
+      transition:all .45s ease;
+      position:relative;
+      padding:14px;
+    }
+    .gate:hover{
+      transform:translateY(-5px) scale(1.01);
+      box-shadow:0 18px 35px rgba(199, 74, 117, 0.28);
+    }
+
+    .gate.friend{
+      background:linear-gradient(180deg,#fff7fa,#ffe8ef);
+    }
+
+    /* حالت انتخاب دوستی */
+    .stage.friend-mode .gates{
+      display:block;
+      width:100%;
+      height:500px;
+      position:relative;
+    }
+
+    .stage.friend-mode .gate{
+      position:absolute;
+      min-height:unset;
+      border-radius:20px;
+    }
+
+    /* درگاه اصلی دوستی - بزرگ وسط */
+    .stage.friend-mode .gate.friend{
+      width:min(62%,650px);
+      height:290px;
+      right:50%;
+      top:45%;
+      transform:translate(50%,-50%);
+      font-size:clamp(28px,3.2vw,44px);
+      background:linear-gradient(180deg,#fff7fa,#ffdfe8);
+      border:2px solid #ffc7d6;
+      z-index:3;
+    }
+
+    /* دو درگاه دیگر - کوچیک و کنار (سمت چپ) زیرهم */
+    .stage.friend-mode .gate.marriage{
+      width:230px;
+      height:120px;
+      left:20px;
+      top:110px;
+      font-size:24px;
+      z-index:2;
+      opacity:0.92;
+    }
+
+    .stage.friend-mode .gate.fun{
+      width:230px;
+      height:120px;
+      left:20px;
+      top:250px;
+      font-size:24px;
+      z-index:2;
+      opacity:0.92;
+    }
+
+    /* گزینه های زیر دوستی */
+    .friend-options{
+      position:absolute;
+      right:50%;
+      top:73%;
+      transform:translateX(50%);
+      width:min(62%,650px);
+      display:flex;
+      gap:14px;
+      justify-content:center;
+      opacity:0;
+      pointer-events:none;
+      transition:all .45s ease .2s;
+      z-index:4;
+    }
+
+    .stage.friend-mode .friend-options{
+      opacity:1;
+      pointer-events:auto;
+      top:76%;
+    }
+
+    .sub-btn{
+      border:none;
+      background:var(--accent);
       color:white;
-      background:var(--primary);
-      padding:10px 16px;
-      border-radius:10px;
-      font-size:14px;
-      transition:.2s;
+      border-radius:14px;
+      font-size:20px;
+      font-weight:700;
+      padding:16px 28px;
+      cursor:pointer;
+      box-shadow:0 10px 22px rgba(231,84,128,.35);
+      transition:.25s;
+      min-width:220px;
     }
-    .btn:hover{background:var(--primary-hover)}
-    .btn-outline{
-      background:transparent;
-      border:1px solid rgba(255,255,255,.2);
+    .sub-btn:hover{
+      background:var(--accent-dark);
+      transform:translateY(-2px);
     }
-    .btn-outline:hover{
-      background:rgba(255,255,255,.08);
-    }
-    .footer{
-      margin-top:24px;
-      font-size:13px;
-      color:#94a3b8;
-      border-top:1px dashed rgba(255,255,255,.15);
-      padding-top:14px;
+
+    @media (max-width:920px){
+      .gates{
+        grid-template-columns:1fr;
+      }
+      .gate{
+        min-height:160px;
+      }
+
+      .stage.friend-mode .gate.friend{
+        width:calc(100% - 24px);
+        right:50%;
+      }
+
+      .stage.friend-mode .gate.marriage,
+      .stage.friend-mode .gate.fun{
+        width:160px;
+        height:90px;
+        left:6px;
+        font-size:16px;
+      }
+
+      .friend-options{
+        width:calc(100% - 24px);
+        flex-direction:column;
+        align-items:center;
+      }
+
+      .sub-btn{
+        width:100%;
+        max-width:340px;
+      }
     }
   </style>
 </head>
 <body>
-  <main class="card">
-    <span class="badge">✅ سایت فعال است</span>
-    <h1>سلام، من اریا اسدی هستم</h1>
-    <p>
-      به سایت شخصی من خوش آمدید. این صفحه نسخه اولیه است و به زودی
-      بخش‌های کامل‌تر مثل نمونه‌کارها، خدمات و راه‌های ارتباطی اضافه می‌شود.
-    </p>
+  <div class="app">
+    <h1>قصد شما چیست</h1>
 
-    <div class="actions">
-      <a class="btn" href="https://github.com/eriasadi" target="_blank">گیت‌هاب من</a>
-      <a class="btn btn-outline" href="#" onclick="alert('راه ارتباطی هنوز ثبت نشده 🙂')">تماس با من</a>
-    </div>
+    <div class="stage" id="stage">
+      <div class="gates">
+        <button class="gate friend" id="friendGate">دوستی</button>
+        <button class="gate marriage">ازدواج (پیشنهاد میشه)</button>
+        <button class="gate fun">سرگرمی</button>
+      </div>
 
-    <div class="footer">
-      ساخته‌شده با GitHub Pages • رایگان و بدون هاست پولی
+      <div class="friend-options" id="friendOptions">
+        <button class="sub-btn">دوستی عادی</button>
+        <button class="sub-btn">ما فقط دوستیم</button>
+      </div>
     </div>
-  </main>
+  </div>
+
+  <script>
+    const stage = document.getElementById('stage');
+    const friendGate = document.getElementById('friendGate');
+
+    friendGate.addEventListener('click', () => {
+      stage.classList.add('friend-mode');
+    });
+  </script>
 </body>
 </html>

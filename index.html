@@ -1,243 +1,85 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>قصد شما چیست</title>
-  <style>
-    :root{
-      --bg1:#ffdbe4;      /* صورتی گلبهی روشن */
-      --bg2:#ffc1cf;      /* صورتی گلبهی */
-      --card:#fff7fa;
-      --text:#5d2c39;
-      --accent:#ff6f91;
-      --accent-dark:#e75480;
-      --soft:#ffe7ee;
-      --shadow:0 14px 35px rgba(199, 74, 117, 0.22);
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:"Tahoma", sans-serif;
-      min-height:100vh;
-      background:linear-gradient(135deg,var(--bg1),var(--bg2));
-      color:var(--text);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-    }
-
-    .app{
-      width:min(1100px,100%);
-      min-height:620px;
-      background:rgba(255,255,255,0.45);
-      border:1px solid rgba(255,255,255,0.6);
-      border-radius:30px;
-      backdrop-filter: blur(4px);
-      box-shadow: var(--shadow);
-      padding:28px 24px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    h1{
-      text-align:center;
-      margin:5px 0 28px;
-      font-size:clamp(28px,4vw,44px);
-      color:#7a3047;
-      letter-spacing:0.4px;
-    }
-
-    .stage{
-      position:relative;
-      min-height:500px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    /* حالت اولیه سه درگاه کنار هم */
-    .gates{
-      width:min(980px,100%);
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:22px;
-      transition:all .6s ease;
-    }
-
-    .gate{
-      border:none;
-      border-radius:24px;
-      min-height:230px;
-      background:var(--card);
-      color:var(--text);
-      font-size:clamp(22px,2.3vw,31px);
-      font-weight:700;
-      cursor:pointer;
-      box-shadow: var(--shadow);
-      border:2px solid rgba(255,255,255,0.7);
-      transition:all .45s ease;
-      position:relative;
-      padding:14px;
-    }
-    .gate:hover{
-      transform:translateY(-5px) scale(1.01);
-      box-shadow:0 18px 35px rgba(199, 74, 117, 0.28);
-    }
-
-    .gate.friend{
-      background:linear-gradient(180deg,#fff7fa,#ffe8ef);
-    }
-
-    /* حالت انتخاب دوستی */
-    .stage.friend-mode .gates{
-      display:block;
-      width:100%;
-      height:500px;
-      position:relative;
-    }
-
-    .stage.friend-mode .gate{
-      position:absolute;
-      min-height:unset;
-      border-radius:20px;
-    }
-
-    /* درگاه اصلی دوستی - بزرگ وسط */
-    .stage.friend-mode .gate.friend{
-      width:min(62%,650px);
-      height:290px;
-      right:50%;
-      top:45%;
-      transform:translate(50%,-50%);
-      font-size:clamp(28px,3.2vw,44px);
-      background:linear-gradient(180deg,#fff7fa,#ffdfe8);
-      border:2px solid #ffc7d6;
-      z-index:3;
-    }
-
-    /* دو درگاه دیگر - کوچیک و کنار (سمت چپ) زیرهم */
-    .stage.friend-mode .gate.marriage{
-      width:230px;
-      height:120px;
-      left:20px;
-      top:110px;
-      font-size:24px;
-      z-index:2;
-      opacity:0.92;
-    }
-
-    .stage.friend-mode .gate.fun{
-      width:230px;
-      height:120px;
-      left:20px;
-      top:250px;
-      font-size:24px;
-      z-index:2;
-      opacity:0.92;
-    }
-
-    /* گزینه های زیر دوستی */
-    .friend-options{
-      position:absolute;
-      right:50%;
-      top:73%;
-      transform:translateX(50%);
-      width:min(62%,650px);
-      display:flex;
-      gap:14px;
-      justify-content:center;
-      opacity:0;
-      pointer-events:none;
-      transition:all .45s ease .2s;
-      z-index:4;
-    }
-
-    .stage.friend-mode .friend-options{
-      opacity:1;
-      pointer-events:auto;
-      top:76%;
-    }
-
-    .sub-btn{
-      border:none;
-      background:var(--accent);
-      color:white;
-      border-radius:14px;
-      font-size:20px;
-      font-weight:700;
-      padding:16px 28px;
-      cursor:pointer;
-      box-shadow:0 10px 22px rgba(231,84,128,.35);
-      transition:.25s;
-      min-width:220px;
-    }
-    .sub-btn:hover{
-      background:var(--accent-dark);
-      transform:translateY(-2px);
-    }
-
-    @media (max-width:920px){
-      .gates{
-        grid-template-columns:1fr;
-      }
-      .gate{
-        min-height:160px;
-      }
-
-      .stage.friend-mode .gate.friend{
-        width:calc(100% - 24px);
-        right:50%;
-      }
-
-      .stage.friend-mode .gate.marriage,
-      .stage.friend-mode .gate.fun{
-        width:160px;
-        height:90px;
-        left:6px;
-        font-size:16px;
-      }
-
-      .friend-options{
-        width:calc(100% - 24px);
-        flex-direction:column;
-        align-items:center;
-      }
-
-      .sub-btn{
-        width:100%;
-        max-width:340px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>بازی فرار علی (Ali Escape)</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: #87CEEB; font-family: Tahoma, sans-serif; }
+        #gameCanvas { display: block; margin: 0 auto; background: #555; }
+        #ui { position: absolute; top: 10px; left: 10px; color: white; font-size: 20px; }
+    </style>
 </head>
 <body>
-  <div class="app">
-    <h1>قصد شما چیست</h1>
+    <div id="ui">امتیاز: <span id="score">0</span></div>
+    <canvas id="gameCanvas"></canvas>
 
-    <div class="stage" id="stage">
-      <div class="gates">
-        <button class="gate friend" id="friendGate">دوستی</button>
-        <button class="gate marriage">ازدواج (پیشنهاد میشه)</button>
-        <button class="gate fun">سرگرمی</button>
-      </div>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 400;
+        canvas.height = 600;
 
-      <div class="friend-options" id="friendOptions">
-        <button class="sub-btn">دوستی عادی</button>
-        <button class="sub-btn">ما فقط دوستیم</button>
-      </div>
-    </div>
-  </div>
+        // بارگذاری تصاویر
+        const aliImg = new Image(); aliImg.src = 'ali.png';
+        const girlImg = new Image(); girlImg.src = 'girl.png';
 
-  <script>
-    const stage = document.getElementById('stage');
-    const friendGate = document.getElementById('friendGate');
+        let score = 0;
+        let gameRunning = true;
 
-    friendGate.addEventListener('click', () => {
-      stage.classList.add('friend-mode');
-    });
-  </script>
+        let ali = { x: 180, y: 500, w: 40, h: 60, speed: 5 };
+        let girl = { x: 180, y: 650, w: 50, h: 70, speed: 2 };
+        let obstacles = [];
+
+        // کنترل با کیبورد
+        window.addEventListener('keydown', (e) => {
+            if (e.key === "ArrowLeft" && ali.x > 50) ali.x -= 100;
+            if (e.key === "ArrowRight" && ali.x < 300) ali.x += 100;
+        });
+
+        function createObstacle() {
+            let xPos = [50, 150, 250][Math.floor(Math.random() * 3)];
+            obstacles.push({ x: xPos, y: -50, w: 60, h: 30 });
+        }
+        setInterval(createObstacle, 1500);
+
+        function update() {
+            if (!gameRunning) return;
+
+            // حرکت موانع
+            obstacles.forEach((obs, index) => {
+                obs.y += 5;
+                if (obs.y > 600) { obstacles.splice(index, 1); score += 10; document.getElementById('score').innerText = score; }
+
+                // برخورد با مانع
+                if (ali.x < obs.x + obs.w && ali.x + ali.w > obs.x && ali.y < obs.y + obs.h && ali.y + ali.h > obs.y) {
+                    girl.y = 520; // دختر نزدیک میشه
+                }
+            });
+
+            // تعقیب دختر
+            if (girl.y > ali.y) girl.y -= 0.5;
+            if (girl.y <= ali.y) {
+                gameRunning = false;
+                alert("گرفتت! بازی تموم شد. امتیاز شما: " + score);
+                location.reload();
+            }
+
+            draw();
+            requestAnimationFrame(update);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // رسم علی
+            ctx.drawImage(aliImg, ali.x, ali.y, ali.w, ali.h);
+            // رسم دختر
+            ctx.drawImage(girlImg, girl.x, girl.y, girl.w, girl.h);
+            // رسم موانع
+            ctx.fillStyle = "red";
+            obstacles.forEach(obs => ctx.fillRect(obs.x, obs.y, obs.w, obs.h));
+        }
+
+        update();
+    </script>
 </body>
 </html>
